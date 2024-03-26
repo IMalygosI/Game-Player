@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -80,13 +81,13 @@ namespace Game_Player
                         break;
                 }
                 Console.WriteLine($"Координаты: {Koordinate_X},{Koordinate_Y}");
-                foreach (Game person in players)
+                foreach (Game player in players)
                 {
-                    if (Koordinate_X == person.Koordinate_X && Koordinate_Y == person.Koordinate_Y)
+                    if (Koordinate_X == player.Koordinate_X && Koordinate_Y == player.Koordinate_Y)
                     {
-                        if (person.life == true)
+                        if (player.life == true)
                         {
-                            if (mine_stranger != person.mine_stranger)
+                            if (mine_stranger != player.mine_stranger)
                             {
                                 Inspection(players);
                             }
@@ -113,15 +114,13 @@ namespace Game_Player
                 {
                     return;
                 }
-                Console.ForegroundColor = ConsoleColor.Cyan;
                 string? choice = Console.ReadLine();
-                Console.ForegroundColor = ConsoleColor.White;
                 switch (choice)
                 {
-                    case "вверх":
+                    case "1":
                         Koordinate_Y += 1;
                         break;
-                    case "вниз":
+                    case "2":
                         Koordinate_Y -= 1;
                         break;
                 }
@@ -256,19 +255,19 @@ namespace Game_Player
                     {
                         Console.WriteLine($" Имя: {player.Name},\nXp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
                     }
-                    else
-                    {
-                        Console.WriteLine(" Вы победили!");
-                        Victores += 1;
-                        Archive(players);
-                        return;
-                    }
+                    //else
+                    //{
+                    //    Console.WriteLine(" Вы победили!");
+                    //    Victores += 1;
+                    //    Archive(players);
+                    //    return;
+                    //}
                 }
                 while (true)
                 {
                     Console.WriteLine(" Сделайте выбор: 1 - Атака; 2 - Ульта");
                     string? choice = Console.ReadLine();
-                    switch (choice)
+                    switch (choice) 
                     {
                         case "1":
                             battle(players);
@@ -279,13 +278,13 @@ namespace Game_Player
                     }
                     break;
                 }
-                if (Enemy.Count(Game => Game.life == true) == 0) //проверка победы 
-                {
-                    Console.WriteLine(" Вы победили!");
-                    Victores += 1;
-                    Archive(players);
-                    return;
-                }
+                //if (Enemy.Count(Game => Game.life == true) == 0) //проверка победы 
+                //{
+                //    Console.WriteLine(" Вы победили!");
+                //    Victores += 1;
+                //    Archive(players);
+                //    return;
+                //}
             }
         }
         private void Ulta(List<Game> players) //Ульта есть ульта...
@@ -380,7 +379,7 @@ namespace Game_Player
         {
             Console.WriteLine($" Имя: {Name}");
             Console.WriteLine($" Координаты: ({Koordinate_X},{Koordinate_Y})");
-            Console.WriteLine($" Здоровье: Максимум: {Max_Xp}/Сейчас: {Xp}");
+            Console.WriteLine($" Здоровье: Максимум: {Xp}/Сейчас: {Max_Xp}");
             if (mine_stranger == true)
             {
                 Console.WriteLine($" Лагерь: Альянс");
@@ -434,20 +433,20 @@ namespace Game_Player
             }
             while (true)
             {
-                if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0 && players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)//true
+                if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0 && players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)//
                 {
                     Console.WriteLine(" Ничья");
-                    Archive(players);
+                    Players_Game.Menu();
                     return;
                 }
-                else if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0)//true
+                else if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0)//
                 {
                     Console.WriteLine(" Победа!");
                     Victores += 1;
                     Players_Game.Menu();
                     return;
                 }
-                else if (players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)//true
+                else if (players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)//
                 {
                     Console.WriteLine(" Вы проиграли!");
                     Players_Game.Menu();
@@ -463,7 +462,7 @@ namespace Game_Player
                     else
                     {;
                         Console.WriteLine("\n1 - Информация о персонаже\n" +
-                                          "2 - Переместиться горизонтали (влево или в право)\n" +
+                                          "2 - Переместиться горизонтали (влево или вправо)\n" +
                                           "3 - Переместиться вертикали (вверх или вниз)\n" +
                                           "4 - Лечить себя\n" +
                                           "5 - Лечить союзников\n" +
