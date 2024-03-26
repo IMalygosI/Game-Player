@@ -9,7 +9,6 @@ namespace Game_Player
 {
     internal class Game
     {
-
         private string Name;// Имя персонажа
         private int Koordinate_X;//Координаты        
         private int Koordinate_Y;//Координаты
@@ -424,7 +423,7 @@ namespace Game_Player
             {
                 if (Koordinate_X == player.Koordinate_X && Koordinate_Y == player.Koordinate_Y)
                 {
-                    if (player.mine_stranger == true)
+                    if (player.life == true)
                     {
                         if (mine_stranger != player.mine_stranger)
                         {
