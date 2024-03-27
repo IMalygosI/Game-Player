@@ -233,11 +233,11 @@ namespace Game_Player
                         player.life = false;
                     }
                 }
-                //if (life == false) //Проверка на живой/труп
-                //{
-                //    Console.WriteLine("Персонаж мертв");
-                //    return;
-                //}
+                if (life == false) //Проверка на живой/труп
+                {
+                    Console.WriteLine("Персонаж мертв");
+                    return;
+                }
                 if (players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)
                 {
                     return;
@@ -251,7 +251,7 @@ namespace Game_Player
                 {
                     if (player.life == true)
                     {
-                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
+                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\n нанесеный урон : {Friend_Uron},\n Урон Получен: {Enemy_Uron}"); 
                     }
                 }
                 Console.WriteLine("\n Команда противников после БОЯ: ");
@@ -259,7 +259,7 @@ namespace Game_Player
                 {
                     if (player.life == true)
                     {
-                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
+                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\\n нанесеный урон : {Friend_Uron},\\n Урон Получен: {Enemy_Uron}");
                     }
                     else
                     {
