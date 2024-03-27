@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -187,12 +187,12 @@ namespace Game_Player
                     }
                 }
             }
-            Console.WriteLine(" Наша команда:"); //Перечисление союзников
+            Console.WriteLine("\n Наша команда ДО БОЯ:"); //Перечисление союзников
             foreach (Game player in Friend)
             {
                 player.Information_Player();
             }
-            Console.WriteLine(" Команда противника:"); //Перечисление врагов
+            Console.WriteLine("\n Команда противника ДО БОЯ:"); //Перечисление врагов
             foreach (Game player in Enemy)
             {
                 player.Information_Player();
@@ -240,7 +240,7 @@ namespace Game_Player
                 {
                     return;
                 }
-                Console.WriteLine(" Состояние своих: "); //проверка ОЗ
+                Console.WriteLine("\n Команда наших после БОЯ: "); //проверка ОЗ
                 foreach (Game player in Friend)
                 {
                     if (player.life == true)
@@ -248,20 +248,20 @@ namespace Game_Player
                         Console.WriteLine($" Имя: {player.Name},\nXp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
                     }
                 }
-                Console.WriteLine(" Состояние противников: ");
+                Console.WriteLine("\n Команда противников после БОЯ: ");
                 foreach (Game player in Enemy)
                 {
                     if (player.life == true)
                     {
                         Console.WriteLine($" Имя: {player.Name},\nXp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
                     }
-                    //else
-                    //{
-                    //    Console.WriteLine(" Вы победили!");
-                    //    Victores += 1;
-                    //    Archive(players);
-                    //    return;
-                    //}
+                    else
+                    {
+                        Console.WriteLine(" Вы победили!");
+                        Victores += 1;
+                        Archive(players);
+                        return;
+                    }
                 }
                 while (true)
                 {
@@ -278,13 +278,13 @@ namespace Game_Player
                     }
                     break;
                 }
-                //if (Enemy.Count(Game => Game.life == true) == 0) //проверка победы 
-                //{
-                //    Console.WriteLine(" Вы победили!");
-                //    Victores += 1;
-                //    Archive(players);
-                //    return;
-                //}
+                if (Enemy.Count(Game => Game.life == true) == 0) //проверка победы 
+                {
+                    Console.WriteLine(" Вы победили!");
+                    Victores += 1;
+                    Archive(players);
+                    return;
+                }
             }
         }
         private void Ulta(List<Game> players) //Ульта есть ульта...
