@@ -22,8 +22,6 @@ namespace Game_Player
         private bool mine_stranger;// свой - чужой
 
         static public List<Game> players;
-        List<Game> Friend = new List<Game>();
-        List<Game> Enemy = new List<Game>();
         public string? name { get { return Name; } }
         public bool Life { get { return life; } }
         public bool Mine_stranger { get { return mine_stranger; } }
@@ -170,6 +168,9 @@ namespace Game_Player
         }
         private void battle(List<Game> players)//битва
         {
+
+            List<Game> Friend = new List<Game>();
+            List<Game> Enemy = new List<Game>();
             foreach (Game player in players)
             {
                 if (Koordinate_X == player.Koordinate_X && Koordinate_Y == player.Koordinate_Y)
@@ -235,7 +236,7 @@ namespace Game_Player
                 }
                 if (life == false) //Проверка на живой/труп
                 {
-                    Console.WriteLine("Персонаж мертв");
+                    Console.WriteLine(" труп");
                     return;
                 }
                 if (players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)
@@ -259,14 +260,14 @@ namespace Game_Player
                 {
                     if (player.life == true)
                     {
-                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\\n нанесеный урон : {Friend_Uron},\\n Урон Получен: {Enemy_Uron}");
+                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\n нанесеный урон : {Enemy_Uron},\n Урон Получен: {Friend_Uron}");
                     }
                     else
                     {
                         Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp}");
                         Console.WriteLine("\n Вы победили!");
                         Victores += 1;
-                        Archive(players);
+                        Players_Game.Menu();
                         return;
                     }
                 }
@@ -285,11 +286,18 @@ namespace Game_Player
                     }
                     break;
                 }
+                if (Friend.Count(Game => Game.life == true) == 0) //проверка победы 
+                {
+                    Console.WriteLine(" Вы проиграли!");
+                    Victores += 1;
+                    Players_Game.Menu();
+                    return;
+                }
                 if (Enemy.Count(Game => Game.life == true) == 0) //проверка победы 
                 {
-                    Console.WriteLine(" Вы победили!");
+                    Console.WriteLine(" Вы победили!"); 
                     Victores += 1;
-                    Archive(players);
+                    Players_Game.Menu();
                     return;
                 }
             }
@@ -304,8 +312,8 @@ namespace Game_Player
                     {
                         player.life = false;
                         Console.WriteLine(" Победа");
-                        Victores += 1;
-                        Archive(players);
+                        Victores += 1; 
+                        Players_Game.Menu();
                     }
                 }
             }
@@ -408,8 +416,8 @@ namespace Game_Player
             {
                 foreach (Game player in players)
                 {
-                    Friend.Remove(player);
-                    Enemy.Add(player);
+                    //Friend.Remove(player);
+                   // Enemy.Add(player);
                     if (mine_stranger == true)
                     {
                         mine_stranger = false;
@@ -440,69 +448,64 @@ namespace Game_Player
             }
             while (true)
             {
-                if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0 && players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)//
+                //if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0 && players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)//
+                //{
+                //    Console.WriteLine(" Ничья");
+                //    Players_Game.Menu();
+                //    return;
+                //}
+                if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0)//
                 {
-                    Console.WriteLine(" Ничья");
-                    Players_Game.Menu();
-                    return;
-                }
-                else if (players.Count(Game => Game.life == true && Game.mine_stranger != mine_stranger) == 0)//
-                {
-                    Console.WriteLine(" Победа!");
-                    Victores += 1;
+                    Console.WriteLine(" у нас Победа!");
                     Players_Game.Menu();
                     return;
                 }
                 else if (players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)//
                 {
-                    Console.WriteLine(" Вы проиграли!");
+                    Console.WriteLine(" Мы проиграли!");
                     Players_Game.Menu();
                     return;
                 }
-                else
+                else if(life == false)
                 {
-                    if (life == false)
-                    {
-                        Console.WriteLine(" Персонаж мёртв ");
-                        return;
-                    }
-                    else
-                    {
-                        ;
-                        Console.WriteLine("\n1 - Информация о персонаже\n" +
-                                          "2 - Переместиться горизонтали (влево или вправо)\n" +
-                                          "3 - Переместиться вертикали (вверх или вниз)\n" +
-                                          "4 - Лечить себя\n" +
-                                          "5 - Лечить союзников\n" +
-                                          "6 - Выход в иговое меню\n" +
-                                          "7 - Deserte\n");
+                    Console.WriteLine(" Персонаж мёртв ");
+                    Players_Game.Menu();
+                }
+                else
+                {                    
+                    Console.WriteLine("\n1 - Информация о персонаже\n" +
+                                      "2 - Переместиться горизонтали (влево или вправо)\n" +
+                                      "3 - Переместиться вертикали (вверх или вниз)\n" +
+                                      "4 - Лечить себя\n" +
+                                      "5 - Лечить союзников\n" +
+                                      "6 - Выход в иговое меню\n" +
+                                      "7 - Deserte\n");
 
-                        string? choice = Console.ReadLine();
-                        switch (choice)
-                        {
-                            case "1":
-                                Information_Player();
-                                Archive(players);
-                                break;
-                            case "2":
-                                Drive_Koordinate_X(players);
-                                break;
-                            case "3":
-                                Drive_Koordinate_Y(players);
-                                break;
-                            case "4":
-                                Treatment_Yourself();
-                                break;
-                            case "5":
-                                Treatment(players);
-                                break;
-                            case "6":
-                                Players_Game.Menu();
-                                break;
-                            case "7":
-                                Deserte(players);
-                                break;
-                        }
+                    string? choice = Console.ReadLine();
+                    switch (choice)
+                    {
+                        case "1":
+                            Information_Player();
+                            Archive(players);
+                            break;
+                        case "2":
+                            Drive_Koordinate_X(players);
+                            break;
+                        case "3":
+                            Drive_Koordinate_Y(players);
+                            break;
+                        case "4":
+                            Treatment_Yourself();
+                            break;
+                        case "5":
+                            Treatment(players);
+                            break;
+                        case "6":
+                            Players_Game.Menu();
+                            break;
+                        case "7":
+                            Deserte(players);
+                            break;
                     }
                 }
             }
