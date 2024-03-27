@@ -190,12 +190,19 @@ namespace Game_Player
             Console.WriteLine("\n Наша команда ДО БОЯ:"); //Перечисление союзников
             foreach (Game player in Friend)
             {
-                player.Information_Player();
+                if (player.life == true)
+                {
+                    player.Information_Player();
+                }
             }
             Console.WriteLine("\n Команда противника ДО БОЯ:"); //Перечисление врагов
             foreach (Game player in Enemy)
             {
-                player.Information_Player();
+
+                if (player.life == true)
+                {
+                    player.Information_Player();
+                }
             }
             while (true) //Создание общ.урона
             {
@@ -227,11 +234,11 @@ namespace Game_Player
                         player.life = false;
                     }
                 }
-                if (life == false) //Проверка на живой/труп
-                {
-                    Console.WriteLine("Персонаж мертв");
-                    return;
-                }
+                //if (life == false) //Проверка на живой/труп
+                //{
+                //    Console.WriteLine("Персонаж мертв");
+                //    return;
+                //}
                 if (players.Count(Game => Game.life == true && Game.mine_stranger == mine_stranger) == 0)
                 {
                     return;
@@ -245,7 +252,7 @@ namespace Game_Player
                 {
                     if (player.life == true)
                     {
-                        Console.WriteLine($" Имя: {player.Name},\nXp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
+                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
                     }
                 }
                 Console.WriteLine("\n Команда противников после БОЯ: ");
@@ -253,11 +260,12 @@ namespace Game_Player
                 {
                     if (player.life == true)
                     {
-                        Console.WriteLine($" Имя: {player.Name},\nXp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
+                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp},\n Урон получен: {Friend_Uron}");
                     }
                     else
                     {
-                        Console.WriteLine(" Вы победили!");
+                        Console.WriteLine($" Имя: {player.Name},\n Xp: {player.Max_Xp}");
+                        Console.WriteLine("\n Вы победили!");
                         Victores += 1;
                         Archive(players);
                         return;
@@ -267,7 +275,7 @@ namespace Game_Player
                 {
                     Console.WriteLine(" Сделайте выбор: 1 - Атака; 2 - Ульта");
                     string? choice = Console.ReadLine();
-                    switch (choice) 
+                    switch (choice)
                     {
                         case "1":
                             battle(players);
@@ -389,7 +397,7 @@ namespace Game_Player
                 Console.WriteLine($" Лагерь: Орда");
             }
             Console.WriteLine($" Дамаг: {damage}");
-            Console.WriteLine($" Побед: {Victores}");           
+            Console.WriteLine($" Побед: {Victores}");
         }
         public void Deserte(List<Game> players)//Дезертируем!
         {
@@ -407,7 +415,7 @@ namespace Game_Player
                     {
                         mine_stranger = false;
                     }
-                    else if(mine_stranger == false)
+                    else if (mine_stranger == false)
                     {
                         mine_stranger = true;
                     }
@@ -460,7 +468,8 @@ namespace Game_Player
                         return;
                     }
                     else
-                    {;
+                    {
+                        ;
                         Console.WriteLine("\n1 - Информация о персонаже\n" +
                                           "2 - Переместиться горизонтали (влево или вправо)\n" +
                                           "3 - Переместиться вертикали (вверх или вниз)\n" +
