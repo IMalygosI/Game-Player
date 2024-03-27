@@ -198,7 +198,6 @@ namespace Game_Player
             Console.WriteLine("\n Команда противника ДО БОЯ:"); //Перечисление врагов
             foreach (Game player in Enemy)
             {
-
                 if (player.life == true)
                 {
                     player.Information_Player();
